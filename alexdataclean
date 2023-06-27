@@ -1,0 +1,63 @@
+--use alex_clean 
+--select PropertyAddress 
+--from housing 
+
+--select SUBSTRING(PropertyAddress,1,charindex(',',PropertyAddress)-1),
+--SUBSTRING (PropertyAddress,CHARindex(',',PropertyAddress)+1,len(PropertyAddress)) as ad 
+--from housing 
+--select PropertyAddress 
+--from housing 
+--select SUBSTRING (PropertyAddress,1,charindex(',',PropertyAddress)-1) ,
+-- SUBSTRING(PropertyAddress,charindex(',',PropertyAddress)+1,len(PropertyAddress))
+--from housing 
+--select  SUBSTRING(PropertyAddress,charindex(',',PropertyAddress)+1,len(PropertyAddress))
+--from housing 
+
+--select SUBSTRING(PropertyAddress,CHARINDEX(',',PropertyAddress)+1,len(PropertyAddress))
+--from housing 
+
+--select SUBSTRING(PropertyAddress,1,charindex(',',PropertyAddress)-1) 
+--from housing 
+
+--alter table [dbo].[housing] 
+--add   "state" nvarchar(255) 
+
+--update housing 
+--set PropertyAddress =  SUBSTRING(PropertyAddress,1,charindex(',',PropertyAddress)-1) 
+--from housing 
+
+--select PropertyAddress,state 
+--from housing 
+
+
+--select  [OwnerAddress]  
+--from housing  
+
+
+-- splite column with substring 
+select SUBSTRING(OwnerAddress,1,CHARINDEX(',',OwnerAddress)),
+SUBSTRING(OwnerAddress,CHARINDEX(',',OwnerAddress),len(OwnerAddress)
+
+from housing 
+
+
+
+-- split column with parasname 
+
+select PARSENAMe(replace(OwnerAddress,',','.'),1),
+ PARSENAMe(replace(OwnerAddress,',','.'),2),
+ PARSENAMe(replace(OwnerAddress,',','.'),3)
+
+from housing  
+
+
+select  [OwnerAddress]  
+from housing  
+
+update housing 
+set OwnerAddress =  PARSENAMe(replace(OwnerAddress,',','.'),3) from housing
+
+
+
+select OwnerAddress , city , country 
+from housing 
