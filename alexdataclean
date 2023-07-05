@@ -61,3 +61,12 @@ set OwnerAddress =  PARSENAMe(replace(OwnerAddress,',','.'),3) from housing
 
 select OwnerAddress , city , country 
 from housing 
+
+
+--- delete duplicates 
+
+select * from housing 
+with Cte as ( select [UniqueID ], [ParcelID] , [PropertyAddress] , [LandValue], 
+RN = ROW_NUMBER() over(partition by [UniqueID ] order by [UniqueID ] ) 
+from housing ) 
+delete from cte where rn>1
