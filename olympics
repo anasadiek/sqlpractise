@@ -1,0 +1,6 @@
+select * from ( SELECT         dbo.regions.region AS country, events.games, dbo.events.Medal, case when  COUNT(dbo.events.Medal) is null  then 0 else COUNT(dbo.events.Medal) end  AS count
+FROM            dbo.events INNER JOIN
+                         dbo.regions ON dbo.events.NOC = dbo.regions.NOC
+GROUP BY dbo.regions.region, dbo.events.Medal, events.games
+ ) t 
+pivot  ( sum (count) for [medal] in ( "gold" , "bronze" , "silver"  ) ) as  pivottable 
