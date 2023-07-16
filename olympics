@@ -4,3 +4,66 @@ FROM            dbo.events INNER JOIN
 GROUP BY dbo.regions.region, dbo.events.Medal, events.games
  ) t 
 pivot  ( sum (count) for [medal] in ( "gold" , "bronze" , "silver"  ) ) as  pivottable 
+
+
+----use [olympics] 
+
+
+
+----select games , year , season 
+----from events 
+----group by games , year ,season
+----order by games 
+
+
+
+
+----select count(distinct games) 
+----from events 
+
+
+----select  games  , count(distinct noc) as count  
+----from events 
+----group by games 
+----order by games 
+
+
+----select * from events 
+----select * from regions 
+
+----select max([count]) as [max] ,  min ([count]) as min , [game]   from(
+----select count(distinct noc) as [count]  , [games] as game 
+----from events 
+----group by games) t 
+----where [count] = '45' or [count] = '207'
+----group by [game] 
+
+--select * from ( select count(distinct games) as [counta]  , team 
+--from events
+--group by team ) ca
+--where [counta] = '51'
+
+
+--select count(distinct games) as [counta]  , regions.region
+--from events join regions on events.noc = regions.noc 
+--group by regions.region
+--having count(distinct games) ='51' 
+--order by [counta]
+
+
+--select * from events 
+
+
+
+--select count(distinct year) 
+--from events 
+--where season ='summer'
+
+
+--select sum(counts) as [sum] , sport  from  ( select count(distinct sport) as [counts] , sport , year 
+--from events 
+--group by year ,sport ) t 
+--group by t.sport 
+--having sum(counts) ='29'
+--order by sum
+
