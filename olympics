@@ -1,72 +1,111 @@
-----use [olympics] 
+------use [olympics] 
 
 
 
-----select games , year , season 
-----from events 
-----group by games , year ,season
-----order by games 
+------select games , year , season 
+------from events 
+------group by games , year ,season
+------order by games 
 
 
 
-1. How many olympics games have been held?
-----select count(distinct games) 
-----from events 
+---- 1. How many olympics games have been held?
+------select count(distinct games) 
+------from events 
 
 
 
-Mention the total no of nations who participated in each olympics game?
-----select  games  , count(distinct noc) as count  
-----from events 
-----group by games 
-----order by games 
+--Mention the total no of nations who participated in each olympics game?
+------select  games  , count(distinct noc) as count  
+------from events 
+------group by games 
+------order by games 
+
+
+------select * from events 
+------select * from regions 
+--Which year saw the highest and lowest no of countries participating in olympics
+------select max([count]) as [max] ,  min ([count]) as min , [game]   from(
+------select count(distinct noc) as [count]  , [games] as game 
+------from events 
+------group by games) t 
+------where [count] = '45' or [count] = '207'
+------group by [game] 
+
+--5. Which nation has participated in all of the olympic games
+
+----select * from ( select count(distinct games) as [counta]  , team 
+----from events
+----group by team ) ca
+----where [counta] = '51'
+
+
+----select count(distinct games) as [counta]  , regions.region
+----from events join regions on events.noc = regions.noc 
+----group by regions.region
+----having count(distinct games) ='51' 
+----order by [counta]
 
 
 ----select * from events 
-----select * from regions 
-Which year saw the highest and lowest no of countries participating in olympics
-----select max([count]) as [max] ,  min ([count]) as min , [game]   from(
-----select count(distinct noc) as [count]  , [games] as game 
+
+
+--Identify the sport which was played in all summer olympics.
+----select count(distinct year) 
 ----from events 
-----group by games) t 
-----where [count] = '45' or [count] = '207'
-----group by [game] 
+----where season ='summer'
 
-5. Which nation has participated in all of the olympic games
+--Identify the sport which was played in all summer olympics.
+----select sum(counts) as [sum] , sport  from  ( select count(distinct sport) as [counts] , sport , year 
+----from events 
+----group by year ,sport ) t 
+----group by t.sport 
+----having sum(counts) ='29'
+----order by sum
 
---select * from ( select count(distinct games) as [counta]  , team 
---from events
---group by team ) ca
---where [counta] = '51'
+--. Which Sports were just played only once in the olympics.
+----select sum(counts) as [sum] , sport  from  ( select count(distinct sport) as [counts] , sport , year 
+----from events 
+----group by year ,sport ) t 
+----group by t.sport 
+----having sum(counts) ='1'
+----order by sum
 
 
---select count(distinct games) as [counta]  , regions.region
---from events join regions on events.noc = regions.noc 
---group by regions.region
---having count(distinct games) ='51' 
---order by [counta]
+--Fetch the total no of sports played in each olympic games.
+
+--select count(distinct sport) as counta , games 
+--from events 
+--group by games 
+--order by counta desc
+
+
+--Fetch oldest athletes to win a gold medal
+
+
+--select year, name ,medal
+--from events 
+--where medal ='gold'
+--and year ='1896'
+--group by name ,year , medal
 
 
 --select * from events 
+--where medal = 'gold'
+--order by year 
 
+--select * from events 
 
-Identify the sport which was played in all summer olympics.
---select count(distinct year) 
+--select count(sex) over (partition by name) , name 
 --from events 
---where season ='summer'
 
-Identify the sport which was played in all summer olympics.
---select sum(counts) as [sum] , sport  from  ( select count(distinct sport) as [counts] , sport , year 
---from events 
---group by year ,sport ) t 
---group by t.sport 
---having sum(counts) ='29'
---order by sum
 
-. Which Sports were just played only once in the olympics.
---select sum(counts) as [sum] , sport  from  ( select count(distinct sport) as [counts] , sport , year 
---from events 
---group by year ,sport ) t 
---group by t.sport 
---having sum(counts) ='1'
---order by sum
+--select count(if(sex ='m' ,male , 1,null)) malecount ,from events 
+
+
+ --Find the Ratio of male and female athletes participated in all olympic games.
+
+select * from ( select count(distinct sex) as [counta] , sex
+from events group by sex, name   ) t 
+pivot ( sum ([counta]) for [sex] in ("m" , "f") ) as pivottable 
+
