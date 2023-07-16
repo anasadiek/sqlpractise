@@ -1,11 +1,3 @@
-select * from ( SELECT         dbo.regions.region AS country, events.games, dbo.events.Medal, case when  COUNT(dbo.events.Medal) is null  then 0 else COUNT(dbo.events.Medal) end  AS count
-FROM            dbo.events INNER JOIN
-                         dbo.regions ON dbo.events.NOC = dbo.regions.NOC
-GROUP BY dbo.regions.region, dbo.events.Medal, events.games
- ) t 
-pivot  ( sum (count) for [medal] in ( "gold" , "bronze" , "silver"  ) ) as  pivottable 
-
-
 ----use [olympics] 
 
 
@@ -17,11 +9,13 @@ pivot  ( sum (count) for [medal] in ( "gold" , "bronze" , "silver"  ) ) as  pivo
 
 
 
-
+1. How many olympics games have been held?
 ----select count(distinct games) 
 ----from events 
 
 
+
+Mention the total no of nations who participated in each olympics game?
 ----select  games  , count(distinct noc) as count  
 ----from events 
 ----group by games 
@@ -30,13 +24,15 @@ pivot  ( sum (count) for [medal] in ( "gold" , "bronze" , "silver"  ) ) as  pivo
 
 ----select * from events 
 ----select * from regions 
-
+Which year saw the highest and lowest no of countries participating in olympics
 ----select max([count]) as [max] ,  min ([count]) as min , [game]   from(
 ----select count(distinct noc) as [count]  , [games] as game 
 ----from events 
 ----group by games) t 
 ----where [count] = '45' or [count] = '207'
 ----group by [game] 
+
+5. Which nation has participated in all of the olympic games
 
 --select * from ( select count(distinct games) as [counta]  , team 
 --from events
@@ -54,12 +50,12 @@ pivot  ( sum (count) for [medal] in ( "gold" , "bronze" , "silver"  ) ) as  pivo
 --select * from events 
 
 
-
+Identify the sport which was played in all summer olympics.
 --select count(distinct year) 
 --from events 
 --where season ='summer'
 
-
+Identify the sport which was played in all summer olympics.
 --select sum(counts) as [sum] , sport  from  ( select count(distinct sport) as [counts] , sport , year 
 --from events 
 --group by year ,sport ) t 
@@ -67,3 +63,10 @@ pivot  ( sum (count) for [medal] in ( "gold" , "bronze" , "silver"  ) ) as  pivo
 --having sum(counts) ='29'
 --order by sum
 
+. Which Sports were just played only once in the olympics.
+--select sum(counts) as [sum] , sport  from  ( select count(distinct sport) as [counts] , sport , year 
+--from events 
+--group by year ,sport ) t 
+--group by t.sport 
+--having sum(counts) ='1'
+--order by sum
