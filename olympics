@@ -112,3 +112,62 @@ from events group by sex, name   ) t
 pivot ( sum ([counta]) for [sex] in ("m" , "f" ) ) as pivottable 
 
 
+
+--Fetch the top 5 athletes who have won the most gold medals.
+
+
+--select * from events 
+
+--select count(medal) as "counta",name 
+--from events 
+--where medal = 'gold'
+--group by name 
+--order by [counta] desc
+
+
+--Fetch the top 5 athletes who have won the most medals (gold/silver/bronze).
+
+
+--select count(medal) as "counta",name 
+--from events 
+--where medal = 'gold' or  medal = 'silver' or  medal ='bronze'
+--group by name 
+--order by [counta] desc
+
+
+ --Fetch the top 5 most successful countries in olympics. Success is defined by no of medals won.
+
+ --select count(events.medal) as [counta] , regions.region  from 
+ --events join regions 
+ --on events.noc =  regions.NOC
+ --where events.Medal = 'gold' or  events.Medal = 'silver' or  events.Medal ='bronze'
+ --group by region 
+ --order by [counta] desc 
+
+
+ --List down total gold, silver and bronze medals won by each country.
+
+
+
+-- select * from ( select count(events.medal) as [counta] , regions.region ,medal  from 
+-- events join regions 
+-- on events.noc =  regions.NOC
+-- where events.Medal = 'gold' or  events.Medal = 'silver' or  events.Medal ='bronze'
+-- group by region ,medal
+-- ) t 
+--pivot ( sum([counta]) for [medal] in ("gold" , "silver" , "bronze")  )  as pt order by [gold] desc
+
+
+
+ --List down total gold, silver and bronze medals won by each country corresponding
+ --to each olympic games.
+
+
+-- select * from ( select count(events.medal) as [counta] , regions.region ,medal,Games   from 
+-- events join regions 
+-- on events.noc =  regions.NOC
+-- where events.Medal = 'gold' or  events.Medal = 'silver' or  events.Medal ='bronze'
+-- group by region ,medal,games
+-- ) t 
+--pivot ( sum([counta]) for [medal] in ("gold" , "silver" , "bronze")  )  as pt order by region desc
+
