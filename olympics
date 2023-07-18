@@ -171,3 +171,22 @@ pivot ( sum ([counta]) for [sex] in ("m" , "f" ) ) as pivottable
 -- ) t 
 --pivot ( sum([counta]) for [medal] in ("gold" , "silver" , "bronze")  )  as pt order by region desc
 
+
+
+
+--Which countries have never won gold medal but have won silver/bronze medals?
+
+
+--use olympics 
+
+--select * from events 
+
+
+select * from (select count(events.medal)as "counta",events.medal,regions.region 
+from events join regions 
+on events.noc = regions.NOC  
+where events.medal = 'gold' or events.medal = 'silver' or events.medal = 'bronze'
+group by regions.region ,medal ) t
+pivot ( sum([counta]) for [medal] in ("gold","silver","bronze")) as pvt where [gold] is  null
+and [silver] is not null and [bronze] is not null 
+
