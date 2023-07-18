@@ -190,3 +190,17 @@ group by regions.region ,medal ) t
 pivot ( sum([counta]) for [medal] in ("gold","silver","bronze")) as pvt where [gold] is  null
 and [silver] is not null and [bronze] is not null 
 
+
+
+
+
+--19. In which Sport/event, India has won highest medals.
+
+
+select sum(counta) as sum , region,sport from (select count(medal) as "counta" , events.sport ,events.medal  , regions.region 
+from events join regions
+on events.noc = regions.noc 
+where regions.region ='india' and events.medal <> '0' 
+group by regions.region,medal,sport ) t 
+group by region,sport
+order by sum
