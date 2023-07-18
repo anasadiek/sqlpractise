@@ -204,3 +204,18 @@ where regions.region ='india' and events.medal <> '0'
 group by regions.region,medal,sport ) t 
 group by region,sport
 order by sum
+
+
+
+
+--20. Break down all olympic games where India won medal for 
+--Hockey and how many medals in each olympic games
+
+
+select sum(counta) as sum , region,sport,games from (select count(medal) as "counta" , events.games,events.sport ,events.medal  , regions.region 
+from events join regions
+on events.noc = regions.noc 
+where regions.region ='india' and events.medal <> '0' and events.sport ='hockey'
+group by regions.region,medal,sport,games ) t 
+group by region,sport,games 
+order by sum desc 
