@@ -1,1 +1,52 @@
 
+----create database musicstore 
+
+----1. Who is the senior most employee based on job title?
+
+--select * from employee 
+--where title like '%senior%'
+
+--Which countries have the most Invoices?
+
+
+
+
+--select sum(total)as total ,billing_country 
+--from invoice 
+--group by billing_country 
+--order by total desc
+
+
+--What are top 3 values of total invoice?
+
+--select sum(total)as total ,invoice_id
+--from invoice 
+--group by invoice_id
+--order by total desc
+
+--Which city has the best customers? We would like to throw a promotional Music Festival in the city 
+--we made the most money. Write a query that returns one city that has the highest sum of invoice totals.
+--Return both the city name & sum of all invoice totals
+
+
+
+
+
+--select top 1 sum(total)as total ,billing_city
+--from invoice 
+--group by billing_city
+--order by total desc
+
+
+
+--Who is the best customer? The customer who has spent the most money will be declared the best customer.
+--Write a query that returns the person who has spent the most money
+
+
+
+
+select top 1 sum(total)as total ,customer_id
+from invoice 
+group by customer_id
+order by total desc
+
