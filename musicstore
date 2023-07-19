@@ -1,4 +1,3 @@
-
 ----create database musicstore 
 
 ----1. Who is the senior most employee based on job title?
@@ -45,8 +44,20 @@
 
 
 
-select top 1 sum(total)as total ,customer_id
-from invoice 
-group by customer_id
-order by total desc
+--select top 1 sum(total)as total ,customer_id
+--from invoice 
+--group by customer_id
+--order by total desc
 
+
+--1. Write query to return the email, first name, last name, & Genre of all Rock Music listeners. 
+--Return your list ordered alphabetically
+--by email starting with A
+
+--select customer.email,customer.first_name,customer.last_name ,genre.name as"genre name"
+--from invoice join customer on invoice.customer_id = customer.customer_id 
+--join invoice_line on invoice_line.invoice_id = invoice.invoice_id 
+--join  track on invoice_line.track_id = track.track_id join genre 
+--on track.genre_id = genre.genre_id 
+--where genre.name = 'rock'
+--group by email,first_name ,last_name ,genre.name
