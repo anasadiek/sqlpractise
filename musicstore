@@ -90,7 +90,6 @@ order by milliseconds desc
 
 
 
-
 --Find how much amount spent by each customer on artists?
 --Write a query to return customer name, artist name and total spent
 
@@ -101,5 +100,6 @@ join invoice_line on invoice_line.invoice_id = invoice.invoice_id
 join track on invoice_line.track_id = track.track_id 
 join album on track.album_id = album.album_id 
 join artist on album.artist_id = artist.artist_id 
-where customer.first_name  = 'Hannah'
 group by customer.customer_id,customer.first_name,artist.name
+
+
