@@ -61,3 +61,21 @@
 --on track.genre_id = genre.genre_id 
 --where genre.name = 'rock'
 --group by email,first_name ,last_name ,genre.name
+
+
+
+
+
+--2. Let's invite the artists who have written the most rock music in our dataset. 
+--Write a query that returns the Artist name and total track count of the top 10 rock bands
+
+select artist.artist_id , artist.name as"artist name" , count(genre.name)  as "brand count"
+from artist join album on artist.artist_id = album.artist_id 
+join track on album.album_id = track.album_id 
+join genre on track.genre_id = genre.genre_id 
+where genre.name = 'rock'
+group by artist.artist_id , artist.name
+order by [brand count] desc 
+
+
+
