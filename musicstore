@@ -103,3 +103,17 @@ join artist on album.artist_id = artist.artist_id
 group by customer.customer_id,customer.first_name,artist.name
 
 
+
+--2- We want to find out the most popular music Genre for each country. We determine the most popular genre 
+--as the genre with the highest amount of purchases. Write a query that
+--returns each country along with the top Genre. For countries where the maximum number of purchases is shared return all Genres
+
+select customer.country ,genre.name as"brand" , count(invoice.invoice_id) as"count" 
+from customer join invoice on customer.customer_id = invoice.customer_id 
+join invoice_line on invoice_line.invoice_id = invoice.invoice_id 
+join track on track.track_id = invoice_line.track_id 
+join genre on track.genre_id  = genre.genre_id
+
+
+group by customer.country , genre.name
+
