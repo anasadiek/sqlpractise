@@ -1,0 +1,17 @@
+import requests
+from bs4 import BeautifulSoup
+url = "https://wuzzuf.net/search/jobs/?a=hpb&q=cairo&start={page}".format(page =page)
+resp= requests.get(url)
+soup = BeautifulSoup(resp.text,'html')
+title=[]
+titlelist=[]
+
+for page in range(0,15):
+    url = "https://wuzzuf.net/search/jobs/?a=hpb&q=cairo&start={page}".format(page =page)
+    print(url)
+    resp= requests.get(url)
+    print(resp)
+    soup = BeautifulSoup(resp.text,'html')
+    title= soup.find_all('h2',class_ ='css-m604qf')
+    for i in title :
+        titlelist.append(i.text.strip())
