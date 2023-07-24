@@ -119,3 +119,18 @@ join genre on track.genre_id  = genre.genre_id
 
 group by customer.country , genre.name
 
+
+
+--Write a query that determines the customer that has spent the most on music for each country. Write a query that returns the country along with the
+--top customer and how much they spent. 
+--For countries where the top amount spent is shared, provide all customers who spent this amount
+
+
+	with te as (	select customer.customer_id , customer.first_name , sum(invoice.total) as "totalspend" , invoice.billing_country , 
+		ROW_NUMBER() over(PARTITION by invoice.billing_country order by sum(invoice.total) desc) as"rn"
+		from customer join invoice on customer.customer_id = invoice.customer_id
+		group by customer.customer_id , customer.first_name,invoice.billing_country ) 
+		select * from te 
+		where rn = 1
+
+
