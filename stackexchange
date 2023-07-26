@@ -39,9 +39,20 @@
 --where age < '33' and location like '%london%'
 
 
-Advanced Analysis
+--Advanced Analysis
 
-Display the number of votes for each post title
+--Display the number of votes for each post title
+
+
+select count(votes.postid) as "count" , posts.title
+from votes join posts 
+on votes.postid = posts.id
+group by posts.title
+order by count desc 
+select title 
+from posts 
+group by title 
+
 Display posts with comments created by users living in the same location as the post creator
 How many users have never voted ?
 Display all posts having the highest amount of comments
