@@ -44,16 +44,44 @@
 --Display the number of votes for each post title
 
 
-select count(votes.postid) as "count" , posts.title
-from votes join posts 
-on votes.postid = posts.id
-group by posts.title
-order by count desc 
-select title 
-from posts 
-group by title 
+--select count(votes.postid) as "count" , posts.title
+--from votes join posts 
+--on votes.postid = posts.id
+--group by posts.title
+--order by count desc 
+--select title 
+--from posts 
+--group by title 
 
-Display posts with comments created by users living in the same location as the post creator
+--Display posts with comments created by users living in the same location as the post creator
+--SELECT pst.Id AS 'post_id',
+--       pst.Title AS 'post_title',
+--       pst.OwnerUserID AS 'created_by_user',
+--       usr_p.Id AS 'user_id', 
+--       usr_p.DisplayName AS 'creator_user_name',
+--       usr_p.location AS 'creator_location',
+--       cmt.UserId AS 'commentor_id', 
+--       usr_c.DisplayName AS 'commentor_user_name',
+--       usr_c.location AS 'commentor_location'
+--FROM posts pst JOIN users usr_p 
+--ON   pst.OwnerUserID = usr_p.Id
+--               JOIN comments cmt
+--ON   cmt.postId = pst.Id
+--               JOIN users usr_c
+--ON   cmt.UserID = usr_c.Id
+--WHERE usr_c.location = usr_p.location
+ 
+-- 3. How many users have never voted ? 
+select count(users.id) as "count" 
+from users left join votes 
+on users.id = votes.userid 
+where votes.postid  is null 
+
+
+
+
+
+
 How many users have never voted ?
 Display all posts having the highest amount of comments
 For each post, how many votes are coming from users living in Canada ? What’s their percentage of the total number of votes
