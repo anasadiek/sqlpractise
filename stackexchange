@@ -1,10 +1,44 @@
-https://ramkedem.com/en/sql-exercises-for-data-analysts/
-https://ramkedem.com/en/sql_exercises/
+--https://ramkedem.com/en/sql-exercises-for-data-analysts/
+--https://ramkedem.com/en/sql_exercises/
+--use data_analysis_stack_exchange_movies 
 
-How many post were made each year ?
-How many votes were made in each day of the week (Sunday, Monday, Tuesday, etc.) ?
-List all comments created on September 19th, 2012
-List all users under the age of 33, living in London
+
+
+--How many post were made each year ?
+--select * from posts 
+--select year(creationdate) , count(id) as count
+--from posts 
+--group by year(creationdate)
+
+
+--How many votes were made in each day of the week (Sunday, Monday, Tuesday, etc.) ?
+--select * from votes 
+
+--select datename(dw, creationdate) as "day" , count(postid) as " count" 
+--from votes 
+--group by datename(dw , creationdate)
+
+--List all comments created on September 19th, 2012
+
+--select * from comments 
+
+
+--select text 
+--from comments 
+--where creationdate = '2012-09-19'
+
+
+
+
+--List all users under the age of 33, living in London
+
+--select * from users 
+
+--select displayname , location 
+--from users 
+--where age < '33' and location like '%london%'
+
+
 Advanced Analysis
 
 Display the number of votes for each post title
