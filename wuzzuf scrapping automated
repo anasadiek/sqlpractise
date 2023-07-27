@@ -1,0 +1,11 @@
+from bs4 import BeautifulSoup
+import requests
+j = input("job required")
+j = j.replace(' ','+')
+print(j)
+url ="https://wuzzuf.net/search/jobs/?a=hpb&q=senior%20accountant&start=0".format(j=j)
+print(url)
+resp =  requests.get(url)
+soup = BeautifulSoup(resp.text,'html')
+print(soup)
+
