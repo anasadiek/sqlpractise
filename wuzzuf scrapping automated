@@ -31,3 +31,44 @@ with open('new.csv', 'w') as file:
     for j in i:
       file.write(str(j) + ',')
     file.write('')
+
+
+
+
+
+
+
+
+
+
+
+import bs4
+from bs4 import BeautifulSoup
+import requests
+
+titlelist = []
+colist = []
+linklist = []
+j = input("job required")
+j = j.replace(' ', '+')
+for page in range(0, 1):
+  url = "https://wuzzuf.net/search/jobs/?a=navbg%7Cspbg&q={j}&start={page}".format(j=j, page=page)
+  resp = requests.get(url)
+  soup = BeautifulSoup(resp.text, 'html')
+  title = soup.find_all('h2', class_='css-m604qf')
+  for i in title:
+    titlelist.append(i.text.strip())
+  co = soup.find_all('a', class_='css-17s97q8')
+  for c in co:
+    colist.append(c.text.strip())
+  link = soup.find_all('a',target="_blank" ,class_='css-o171kl')
+  for l in link:
+    linklist.append('https://wuzzuf.net' + (l.get("href")))
+    url2=('https://wuzzuf.net'+(l.get("href")))
+    for l2 in url2:
+      resp2=requests.get(url2)
+      soup2=BeautifulSoup(resp2.text,'html')
+      
+
+
+
