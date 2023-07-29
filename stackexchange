@@ -102,44 +102,47 @@
 --FROM "TOP-COMMENT-POSTS"
 --WHERE comment_count_ranking = 1  
 
-For each post, how many votes are coming from users living in Canada ? What’s their percentage of the total number of votes
+--For each post, how many votes are coming from users living in Canada ? What’s their percentage of the total number of votes
+
+
+--select * from posts 
+
+
+--with cte as ( select posts.Id , Users.Location , posts.Title , count(votes.id) as "canada votes "
+--from users join votes
+--on votes.UserId = users.Id 
+--join posts on posts.Id = votes.PostId 
+--where users.location like '%canada%' 
+--group by  users.Location , posts.Title ,posts.Id
+--) 
+
+--select * from cte 
+
+--with cta as ( select posts.Id , Users.Location , posts.Title , count(votes.id) as "total votes"
+--from users join votes
+--on votes.UserId = users.Id 
+--join posts on posts.Id = votes.PostId 
+--group by  users.Location , posts.Title ,posts.Id ) 
+
+
+
+--select * from cte join cta 
+--on cte.id cta.id 
+
+--use [data_analysis_stack_exchange_movies]
+
+
+--Create a pivot table displaying how many posts were created for each year (Y axis) and each month (X axis)
 
 
 select * from posts 
 
 
-with cte as ( select posts.Id as "id1" , Users.Location as "location" , posts.Title as "title" , count(votes.id) as "canada votes "
-from users join votes
-on votes.UserId = users.Id 
-join posts on posts.Id = votes.PostId 
-where users.location like '%canada%' 
-group by  users.Location , posts.Title ,posts.Id
-) 
-,
- cta as ( select posts.Id as "id2" , Users.Location , posts.Title , count(votes.id) as "total votes"
-from users join votes
-on votes.UserId = users.Id 
-join posts on posts.Id = votes.PostId 
-group by  users.Location , posts.Title ,posts.Id ) 
-
-select cte.id1 , cte.location ,cte.title ,sum(cte.[canada votes]) as "canada votes"  ,sum(cta.[total votes]) as "total Votes"  ,
-(sum(cte.[canada votes]) /  sum(cta.[total votes]) ) as "perce"
-from cte join cta 
-on cta.id2 = cte.id1
-group by cte.id1 , cte.location ,cte.title
-order by cte.id1
 
 
-select posts.Id as "id1" , Users.Location as "location" , posts.Title as "title" , count(votes.id) as "canada votes "
-from users join votes
-on votes.UserId = users.Id 
-join posts on posts.Id = votes.PostId 
-where users.location like '%canada%' 
-group by  users.Location , posts.Title ,posts.Id
+select * from (select year(creationdate) as "year" , month(creationdate) as "month" , count(id) as "count" 
+from posts 
+group by year(creationdate)  , month(creationdate) ) t
+pivot (sum(t.count) for [month] in ("1","2","3","4","5","6","7","8","9","10","11","12") ) as piottable 
 
 
-
-
-How many hours in average, it takes to the first comment to be posted after a creation of a new post
-Whats the most common post tag ?
-Create a pivot table displaying how many posts were created for each year (Y axis) and each month (X axis)
