@@ -1,138 +1,138 @@
---https://ramkedem.com/en/sql-exercises-for-data-analysts/
---https://ramkedem.com/en/sql_exercises/
---use data_analysis_stack_exchange_movies 
+https://ramkedem.com/en/sql-exercises-for-data-analysts/
+https://ramkedem.com/en/sql_exercises/
+use data_analysis_stack_exchange_movies 
 
 
 
---How many post were made each year ?
---select * from posts 
---select year(creationdate) , count(id) as count
---from posts 
---group by year(creationdate)
+How many post were made each year ?
+select * from posts 
+select year(creationdate) , count(id) as count
+from posts 
+group by year(creationdate)
 
 
---How many votes were made in each day of the week (Sunday, Monday, Tuesday, etc.) ?
---select * from votes 
+How many votes were made in each day of the week (Sunday, Monday, Tuesday, etc.) ?
+select * from votes 
 
---select datename(dw, creationdate) as "day" , count(postid) as " count" 
---from votes 
---group by datename(dw , creationdate)
+select datename(dw, creationdate) as "day" , count(postid) as " count" 
+from votes 
+group by datename(dw , creationdate)
 
---List all comments created on September 19th, 2012
+List all comments created on September 19th, 2012
 
---select * from comments 
-
-
---select text 
---from comments 
---where creationdate = '2012-09-19'
+select * from comments 
 
 
+select text 
+from comments 
+where creationdate = '2012-09-19'
 
 
---List all users under the age of 33, living in London
-
---select * from users 
-
---select displayname , location 
---from users 
---where age < '33' and location like '%london%'
 
 
---Advanced Analysis
+List all users under the age of 33, living in London
 
---Display the number of votes for each post title
+select * from users 
+
+select displayname , location 
+from users 
+where age < '33' and location like '%london%'
 
 
---select count(votes.postid) as "count" , posts.title
---from votes join posts 
---on votes.postid = posts.id
---group by posts.title
---order by count desc 
---select title 
---from posts 
---group by title 
+Advanced Analysis
 
---Display posts with comments created by users living in the same location as the post creator
---SELECT pst.Id AS 'post_id',
---       pst.Title AS 'post_title',
---       pst.OwnerUserID AS 'created_by_user',
---       usr_p.Id AS 'user_id', 
---       usr_p.DisplayName AS 'creator_user_name',
---       usr_p.location AS 'creator_location',
---       cmt.UserId AS 'commentor_id', 
---       usr_c.DisplayName AS 'commentor_user_name',
---       usr_c.location AS 'commentor_location'
---FROM posts pst JOIN users usr_p 
---ON   pst.OwnerUserID = usr_p.Id
---               JOIN comments cmt
---ON   cmt.postId = pst.Id
---               JOIN users usr_c
---ON   cmt.UserID = usr_c.Id
---WHERE usr_c.location = usr_p.location
+Display the number of votes for each post title
+
+
+select count(votes.postid) as "count" , posts.title
+from votes join posts 
+on votes.postid = posts.id
+group by posts.title
+order by count desc 
+select title 
+from posts 
+group by title 
+
+Display posts with comments created by users living in the same location as the post creator
+SELECT pst.Id AS 'post_id',
+       pst.Title AS 'post_title',
+       pst.OwnerUserID AS 'created_by_user',
+       usr_p.Id AS 'user_id', 
+       usr_p.DisplayName AS 'creator_user_name',
+       usr_p.location AS 'creator_location',
+       cmt.UserId AS 'commentor_id', 
+       usr_c.DisplayName AS 'commentor_user_name',
+       usr_c.location AS 'commentor_location'
+FROM posts pst JOIN users usr_p 
+ON   pst.OwnerUserID = usr_p.Id
+               JOIN comments cmt
+ON   cmt.postId = pst.Id
+               JOIN users usr_c
+ON   cmt.UserID = usr_c.Id
+WHERE usr_c.location = usr_p.location
  
--- 3. How many users have never voted ? 
---select count(users.id) as "count" 
---from users left join votes 
---on users.id = votes.userid 
---where votes.postid  is null 
+ 3. How many users have never voted ? 
+select count(users.id) as "count" 
+from users left join votes 
+on users.id = votes.userid 
+where votes.postid  is null 
 
---Display all posts having the highest amount of comments
---select * from posts 
---select * from comments 
+Display all posts having the highest amount of comments
+select * from posts 
+select * from comments 
 
---select posts.title , count(comments.postid) as"count" 
---from posts join comments 
---on posts.id = comments.postid 
---group by posts.title
---having  count(comments.postid) ='5'
---order by count desc 
+select posts.title , count(comments.postid) as"count" 
+from posts join comments 
+on posts.id = comments.postid 
+group by posts.title
+having  count(comments.postid) ='5'
+order by count desc 
 
---WITH "TOP-COMMENT-POSTS"
---AS
---    (
---    SELECT  pst.Title, 
---            COUNT(*) AS 'number_of_comments' , 
---            DENSE_RANK() OVER (ORDER BY COUNT(*) DESC) AS 'comment_count_ranking'
---    FROM posts pst JOIN comments cmt
---    ON   pst.id = cmt.postid
---    GROUP BY pst.Title
---    )
---SELECT Title 
---FROM "TOP-COMMENT-POSTS"
---WHERE comment_count_ranking = 1  
+WITH "TOP-COMMENT-POSTS"
+AS
+    (
+    SELECT  pst.Title, 
+            COUNT(*) AS 'number_of_comments' , 
+            DENSE_RANK() OVER (ORDER BY COUNT(*) DESC) AS 'comment_count_ranking'
+    FROM posts pst JOIN comments cmt
+    ON   pst.id = cmt.postid
+    GROUP BY pst.Title
+    )
+SELECT Title 
+FROM "TOP-COMMENT-POSTS"
+WHERE comment_count_ranking = 1  
 
---For each post, how many votes are coming from users living in Canada ? What’s their percentage of the total number of votes
-
-
---select * from posts 
+For each post, how many votes are coming from users living in Canada ? What’s their percentage of the total number of votes
 
 
---with cte as ( select posts.Id , Users.Location , posts.Title , count(votes.id) as "canada votes "
---from users join votes
---on votes.UserId = users.Id 
---join posts on posts.Id = votes.PostId 
---where users.location like '%canada%' 
---group by  users.Location , posts.Title ,posts.Id
---) 
-
---select * from cte 
-
---with cta as ( select posts.Id , Users.Location , posts.Title , count(votes.id) as "total votes"
---from users join votes
---on votes.UserId = users.Id 
---join posts on posts.Id = votes.PostId 
---group by  users.Location , posts.Title ,posts.Id ) 
+select * from posts 
 
 
+with cte as ( select posts.Id , Users.Location , posts.Title , count(votes.id) as "canada votes "
+from users join votes
+on votes.UserId = users.Id 
+join posts on posts.Id = votes.PostId 
+where users.location like '%canada%' 
+group by  users.Location , posts.Title ,posts.Id
+) 
 
---select * from cte join cta 
---on cte.id cta.id 
+select * from cte 
 
---use [data_analysis_stack_exchange_movies]
+with cta as ( select posts.Id , Users.Location , posts.Title , count(votes.id) as "total votes"
+from users join votes
+on votes.UserId = users.Id 
+join posts on posts.Id = votes.PostId 
+group by  users.Location , posts.Title ,posts.Id ) 
 
 
---Create a pivot table displaying how many posts were created for each year (Y axis) and each month (X axis)
+
+select * from cte join cta 
+on cte.id cta.id 
+
+use [data_analysis_stack_exchange_movies]
+
+
+Create a pivot table displaying how many posts were created for each year (Y axis) and each month (X axis)
 
 
 select * from posts 
