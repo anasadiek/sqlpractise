@@ -72,3 +72,51 @@ for page in range(0, 1):
 
 
 
+
+
+
+reqlist=[]
+titlelist=[]
+colist=[]
+linklist=[]
+j = input("job required")
+j = j.replace(' ','+')
+for page in range(0,1):
+    url ="https://wuzzuf.net/search/jobs/?a=navbg%7Cspbg&q={j}&start={page}".format(j=j,page=page)
+    resp = requests.get(url)
+    soup = BeautifulSoup(resp.text,'html')
+    title = soup.find_all('h2', class_ ='css-m604qf')
+    for i in title :
+        titlelist.append(i.text.strip())
+    co = soup.find_all('a', class_ ='css-17s97q8')
+    for c in co:
+        colist.append(c.text.strip())
+    link = soup.find_all('a', class_ ='css-o171kl',target="_blank")
+    for l in link:
+        linklist.append('https://wuzzuf.net'+(l.get("href")))
+        url2=('https://wuzzuf.net'+(l.get("href")))
+        print(url2)
+        resp2= requests.get(url2)
+        soup2 = BeautifulSoup(resp2.text,'html')
+        req= soup2.find_all('h2', class_ = 'css-fwj1k5')
+        for r in req:
+            reqlist.append(r.text.strip())
+            
+print(reqlist)
+        
+
+
+
+    req3list=[]
+    url3 ="https://wuzzuf.net/jobs/p/j5IuFAHi1HH0-Sales-Manager-Automotive-spare-parts--Assiut-Assiut-Egypt?o=1&l=sp&t=sj&a=sales%20manager|search-v3|navbl&s=33737584"
+    resp3 = requests.get(url3)
+    print(resp3)
+    soup3 = BeautifulSoup(resp3.text,'html')
+    req3 = soup3.find_all('h1',class_ ='css-f9uh36')
+    print(req3)
+    for r in req3 :
+        req3list.append(r.get(text))
+        
+print(req3list)
+
+
